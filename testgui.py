@@ -13,8 +13,13 @@ layout = [[sg.Text('Enter a Search Query')],
 
 window = sg.Window('Azure Search', layout)
 
-def hitsearch(query):
-    querystring = {"api-version":"2019-05-06","search":"New York"}
+#Hit the search API
+def hitsearch(query, search_type):
+    #Full search if checkmark is typed
+    if search_type:
+        querystring = {"api-version":"2019-05-06","search":query, "queryType":"Full"}
+    else:
+        querystring = {"api-version":"2019-05-06","search":query} 
 
     payload = ""
     headers = {
@@ -40,10 +45,10 @@ while True:
     else:
         if values['_lucerne_']:
             lucerne = True
-            documentsreturned = hitsearch(values['_query_'])
+            documentsreturned = hitsearch(values['_query_'], lucerne)
         else:
             lucerne = False
-            documentsreturned = hitsearch(values['_query_'])
+            documentsreturned = hitsearch(values['_query_'], lucerne)
         
         hits = "Number of Hits:" + str(len(documentsreturned)) 
         sg.Popup(documentsreturned, hits, lucerne)     
