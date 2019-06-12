@@ -34,7 +34,7 @@ def query():
     else:
         qb = QueryBuilder()
 
-    hits = qb.hitsearch(search, sortby)
+    hits = qb.hitsearch(search, sortby, qtype)
     return render_template(template_name_or_list="index.html", hits=hits)
     # return simple_response(200, hits)
 
