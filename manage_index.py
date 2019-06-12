@@ -1,6 +1,8 @@
 import requests
 import sys
 import json
+import simplejson
+
 headers = {
 
             'Content-Type': "application/json",
@@ -18,7 +20,8 @@ if sys.argv[1] == "delete":
 if sys.argv[1] == "get":
     config = requests.get(url="https://duyssearch.search.windows.net/indexes/azureblob-index", headers=headers, params=params).json()
     with open('config.json', 'w') as outfile:
-        json.dump(config, outfile)
+        outfile.write(simplejson.dumps(simplejson.load(config), indent=4))
+
 if sys.argv[1] == "post":
     with open('config.json', 'r') as outfile:
         config = json.load(outfile)
