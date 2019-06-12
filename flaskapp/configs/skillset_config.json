@@ -1,86 +1,82 @@
 {
-  "description":
-  "Extract sentiment from financial records, extract company names, and then find additional information about each company mentioned.",
-  "skills":
-  [
-    {
-      "@odata.type": "#Microsoft.Skills.Text.EntityRecognitionSkill",
-      "context": "/document",
-      "categories": [ "Organization", "Person", "Location", "URL"],
-      "defaultLanguageCode": "en",
-      "inputs": [
+    "@odata.context": "https://duyssearch.search.windows.net/$metadata#skillsets/$entity",
+    "@odata.etag": "\"0x8D6EF72F7EA4FB8\"",
+    "name": "cognitiveskillset",
+    "description": "Extract sentiment from financial records, extract company names, and then find additional information about each company mentioned.",
+    "skills": [
         {
-          "name": "text",
-          "source": "/documents/content"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "organizations",
-          "targetName": "organization"
+            "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "defaultLanguageCode": null,
+            "inputs": [
+                {
+                    "name": "text",
+                    "source": "/document/content",
+                    "sourceContext": null,
+                    "inputs": []
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "score",
+                    "targetName": "mySentiment"
+                }
+            ]
         },
         {
-          "name": "persons",
-          "targetName": "person"
+            "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "inputs": [
+                {
+                    "name": "text",
+                    "source": "/document/content",
+                    "sourceContext": null,
+                    "inputs": []
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "languageCode",
+                    "targetName": "languageCode"
+                }
+            ]
         },
         {
-          "name": "locations",
-          "targetName": "location"
-        },
-        {
-          "name": "urls",
-          "targetName": "url"
+            "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "defaultLanguageCode": null,
+            "maxKeyPhraseCount": null,
+            "inputs": [
+                {
+                    "name": "text",
+                    "source": "/document/content",
+                    "sourceContext": null,
+                    "inputs": []
+                },
+                {
+                    "name": "languageCode",
+                    "source": "/document/languagecode",
+                    "sourceContext": null,
+                    "inputs": []
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "keyPhrases",
+                    "targetName": "myKeyPhrases"
+                }
+            ]
         }
-      ]
-    },
-    {
-      "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
-      "inputs": [
-        {
-          "name": "text", "source": "/document/content"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "languageCode",
-          "targetName": "languageCode"
-        }
-      ]
-    },
-    {
-      "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
-      "inputs": [
-        {
-          "name": "text",
-          "source": "/document/content"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "score",
-          "targetName": "mySentiment"
-        }
-      ]
-    },
-    {
-    "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
-    "inputs": [
-      {
-        "name": "text",
-        "source": "/document/content"
-      },
-      {
-        "name": "languageCode",
-        "source": "/document/languageCode"
-      }
     ],
-    "outputs": [
-      {
-        "name": "keyPhrases",
-        "targetName": "myKeyPhrases"
-      }
-    ]
+    "cognitiveServices": {
+        "@odata.type": "#Microsoft.Azure.Search.CognitiveServicesByKey",
+        "description": "mycogsvcs",
+        "key": "5d9d3b34caf444eb8e6cd5b09db1c1a2"
     }
-
-  ]
 }

@@ -64,7 +64,7 @@ class ConfigManager(object):
         outfile.write(simplejson.dumps(simplejson.loads(config), indent=4, sort_keys=True))
 
     def post_index(self):
-        with open(os.path.join(self.index_path, 'r')) as outfile:
+        with open(self.index_path) as outfile:
             config = json.load(outfile)
         r = requests.post(url=baseurl + "indexes/azureblob-index", headers=headers, json=config, params=self.base_params)
         print(r.status_code)
@@ -81,4 +81,3 @@ class ConfigManager(object):
             return {}
         payload = json.loads(response.text)
         return payload
-
