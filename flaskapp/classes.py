@@ -33,6 +33,8 @@ class QueryBuilder(object):
         payload = json.loads(response.text)['value']
         filenames = []
         for documents in payload:
-            filenames.append({documents['metadata_storage_name'], documents["metadata_storage_last_modified"], documents["metadata_storage_size"]})
+            filenames.append({"name": documents['metadata_storage_name'],
+                              "modified": documents["metadata_storage_last_modified"],
+                              "size": documents["metadata_storage_size"]})
         return filenames
 
