@@ -15,9 +15,10 @@ layout = [[sg.Text('Enter a Search Query', size = (30, 1)), sg.Text('Sort by (la
 window = sg.Window('Azure Search', layout)
 
 qb = classes.QueryBuilder()
+cm = classes.ConfigManager("flaskapp/configs/")
 
 if sys.argv[1] == "createskillset":
-    qb.createskillset(sys.argv[2])
+    cm.create_skillset(sys.argv[2])
 
 
 if sys.argv[1] == "hitsearch":

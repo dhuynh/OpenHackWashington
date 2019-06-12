@@ -30,26 +30,16 @@ def query():
     except AttributeError:
         sortby = None
 
+    qb = QueryBuilder()
     if qtype is None:
-        qb = QueryBuilder(qtype)
+        hits = qb.hitsearch(search, sortby, qtype)
     else:
-        qb = QueryBuilder()
+        hits = qb.hitsearch(search, sortby)
 
-    hits = qb.hitsearch(search, sortby, qtype)
-    return render_template(template_name_or_list="index.html", hits=hits)
+
+    return render_template(template_name_or_list="index.html", hits=hits, num_hits=str(len(hits)))
     # return simple_response(200, hits)
 
-@app.route("/configs/<config_name>", methods=["POST", "DELETE", "EDIT"])
-def manage_config(config_name):
-    cm = ConfigManager(config_path=config_path)
-    url=""
-    if config_name == "indexer":
-        url = baseurl + "indexers/myindexer"
-
-    if request.method == "POST":
-        cm.post_config(url=url)
-    elif request.method == "DELETE":
-        cm.delete_config(url=url)
 
 def simple_response(status, content):
     pprint(content)

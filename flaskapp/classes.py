@@ -19,11 +19,11 @@ params = {
 
 
 class QueryBuilder(object):
-    def __init__(self, query_type=None):
+    def __init__(self):
         self.base_params = params
         self.headers = headers
 
-    def hitsearch(self, query, sortby, query_type):
+    def hitsearch(self, query, sortby, query_type='simple'):
         # Full search if checkmark is typed
         url = baseurl + "indexes/azureblob-index/docs"
         self.base_params.update({"queryType": query_type, "search": query, "$orderby": sortby})
@@ -40,41 +40,45 @@ class QueryBuilder(object):
                               "size": documents["metadata_storage_size"]})
         return filenames
 
-    def createskillset(self, skillsetname, config_path):
-        url = str(baseurl + "skillsets/" + skillsetname)
-        payload = ""
-        with open(os.path.join(config_path, "skillset_config")) as config:
-            config = json.load(config)
-        response = requests.put(url=url, data=payload, headers=self.headers, params=self.base_params, json=config)
-        if response.status_code != 201:
-            print("error parsing the response: %s" % str(response.content))
-            return {}
-        payload = json.loads(response.text)
-        return payload
-
 class ConfigManager(object):
     def __init__(self, config_path):
         self.base_params = params
         self.headers = headers
         self.config_path = config_path
+        self.index_path = os.path.join(self.config_path, "index_config.json")
+        self.skillset_path = os.path.join(self.config_path, "skillset_config.json")
+        self.indexer_path = os.path.join(self.config_path, "skillset_config.json")
 
-    def delete_config(self, url):
-        print(url)
-        requests.delete(url=url, headers=headers, params=self.base_params)
+    def delete_index(self):
+        r = requests.delete(url=baseurl + "indexes/azureblob-index", headers=headers, params=self.base_params)
+        print(r.status_code)
 
-    def get_config(self, url):
-        r = requests.get(url=url, headers=headers, params=self.base_params)
+    def get_index(self):
+        r = requests.get(url=baseurl + "indexes/azureblob-index", headers=headers, params=self.base_params)
         config = r.content
         print(r.status_code)
         if len(config) < 5:
             print("nothing to write")
             sys.exit(0)
-        outfile = open(self.config_path, "w")
+        outfile = open(self.index_path, "w")
         outfile.write(simplejson.dumps(simplejson.loads(config), indent=4, sort_keys=True))
 
-    def post_config(self, url):
-        with open(self.config_path, 'r') as outfile:
-            config = json.load(outfile)["fields"]
-        r = requests.post(url=url, headers=headers, json=config, params=self.base_params)
+    def post_index(self):
+        with open(os.path.join(self.index_path, 'r')) as outfile:
+            config = json.load(outfile)
+        r = requests.post(url=baseurl + "indexes/azureblob-index", headers=headers, json=config, params=self.base_params)
+        print(r.status_code)
 
+    def create_skillset(self, skillsetname):
+        payload = ""
+        with open(self.skillset_path) as config:
+            config = json.load(config)
+        print(baseurl + "skillsets/" + skillsetname)
+        response = requests.put(url = baseurl + "skillsets/" + skillsetname, data=payload, headers=self.headers,
+                                params=self.base_params, json=config)
+        if response.status_code != 201:
+            print("error parsing the response: %s" % str(response.content))
+            return {}
+        payload = json.loads(response.text)
+        return payload
 

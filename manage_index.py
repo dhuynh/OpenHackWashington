@@ -3,8 +3,6 @@ import sys
 import json
 import simplejson
 
-
-
 headers = {
 
             'Content-Type': "application/json",

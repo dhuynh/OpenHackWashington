@@ -71,7 +71,7 @@
       },
       {
         "name": "languageCode",
-        "source": "/document/languagecode"
+        "source": "/document/languageCode"
       }
     ],
     "outputs": [
@@ -80,27 +80,7 @@
         "targetName": "myKeyPhrases"
       }
     ]
-    },
-    {
-      "@odata.type": "#Microsoft.Skills.Custom.WebApiSkill",
-     "description": "Calls an Azure function, which in turn calls Bing Entity Search",
-      "uri": "https://indexer-e2e-webskill.azurewebsites.net/api/InvokeTextAnalyticsV3?code=foo",
-      "httpHeaders": {
-          "Ocp-Apim-Subscription-Key": "foobar"
-      },
-      "context": "/document/organizations/*",
-      "inputs": [
-        {
-          "name": "query",
-          "source": "/document/organizations/*"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "description",
-          "targetName": "companyDescription"
-        }
-      ]
     }
+
   ]
 }
