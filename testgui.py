@@ -6,7 +6,7 @@ from pprint import pprint
 url = "https://duyssearch.search.windows.net/indexes/azureblob-index/docs"     
 
 #GUI
-layout = [[sg.Text('Enter a Search Query', size = (40, 1)), sg.Text('Sort by (last_modified, size):', size = (30, 1))],
+layout = [[sg.Text('Enter a Search Query', size = (40, 1)), sg.Text('Sort by (last_modified, size, filename):', size = (30, 1))],
           [sg.Input(do_not_clear=True, key='_query_', size = (40, 1)), sg.Input(do_not_clear=True, key='_sortby_', size = (30, 1))],
           [sg.Checkbox('Full Lucerne Search?', key='_lucerne_')],    
           [sg.Button('Query'), sg.Exit()],
@@ -35,17 +35,15 @@ class QueryBuilder(object):
 
     def hitsearch(self, query, sortby):
         # Full search if checkmark is typed
-        self.base.update({"search": query, "orderby": sortby})
+        self.base.update({"search": query, "$orderby": sortby})
         payload = ""
         response = requests.get(url=url, data=payload, headers=self.headers, params=self.base)
         payload = json.loads(response.text)['value']
         pprint(payload)
         filenames = []
         for documents in payload:
-            filenames.append({documents['metadata_storage_name'], documents["metadata_storage_last_modified"]})
+            filenames.append({documents['metadata_storage_name'], documents["metadata_storage_last_modified"], documents["metadata_storage_size"]})
         return filenames
-
-    # def sorted_search(self, query):
 
 
 if sys.argv[1] == "hitsearch":
@@ -54,7 +52,6 @@ if sys.argv[1] == "hitsearch":
         if event is None or event == 'Exit':
             break
         else:
-
             if values['_lucerne_']:
                 search_type = "Full"
             else:
@@ -62,6 +59,10 @@ if sys.argv[1] == "hitsearch":
             sortby=None
             if values['_sortby_'] == "last_modified":
                 sortby="metadata_storage_last_modified desc"
+            elif values['_sortby_'] == "filename":
+                sortby = "metadata_storage_name"
+            elif values['_sortby_'] == "size":
+                sortby = "metadata_storage_size"
             qb = QueryBuilder(search_type)
             documentsreturned = qb.hitsearch(values['_query_'], sortby)
 
