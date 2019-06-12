@@ -38,8 +38,10 @@ class QueryBuilder(object):
         self.base.update({"search": query, "$orderby": sortby})
         payload = ""
         response = requests.get(url=url, data=payload, headers=self.headers, params=self.base)
+        if response.status_code != 200:
+            print("error parsing the response: %s" % str(response.content))
+            return {}
         payload = json.loads(response.text)['value']
-        pprint(payload)
         filenames = []
         for documents in payload:
             filenames.append({documents['metadata_storage_name'], documents["metadata_storage_last_modified"], documents["metadata_storage_size"]})
@@ -53,7 +55,7 @@ if sys.argv[1] == "hitsearch":
             break
         else:
             if values['_lucerne_']:
-                search_type = "Full"
+                search_type = "full"
             else:
                 search_type = None
             sortby=None
