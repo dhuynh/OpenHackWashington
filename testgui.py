@@ -6,7 +6,7 @@ from pprint import pprint
 url = "https://duyssearch.search.windows.net/indexes/azureblob-index/docs"     
 
 #GUI
-layout = [[sg.Text('Enter a Search Query', size = (40, 1)), sg.Text('Sort by (last_modified, size, filename):', size = (30, 1))],
+layout = [[sg.Text('Enter a Search Query', size = (30, 1)), sg.Text('Sort by (last_modified, size, filename, type):', size = (30, 1))],
           [sg.Input(do_not_clear=True, key='_query_', size = (40, 1)), sg.Input(do_not_clear=True, key='_sortby_', size = (30, 1))],
           [sg.Checkbox('Full Lucerne Search?', key='_lucerne_')],    
           [sg.Button('Query'), sg.Exit()],
@@ -63,6 +63,8 @@ if sys.argv[1] == "hitsearch":
                 sortby = "metadata_storage_name"
             elif values['_sortby_'] == "size":
                 sortby = "metadata_storage_size"
+            elif values['_sortby_'] == "type":
+                sortby = "metadata_storage_content_type"
 
             qb = QueryBuilder(search_type)
             documentsreturned = qb.hitsearch(values['_query_'], sortby)

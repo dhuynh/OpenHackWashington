@@ -12,17 +12,22 @@ headers = {
 
 }
 params = {
-                "api-version": "2019-05-06"
-            }
+            "api-version": "2019-05-06"
+        }
 if sys.argv[1] == "delete":
     requests.delete(url="https://duyssearch.search.windows.net/indexes/azureblob-index", headers=headers, params=params)
 
 if sys.argv[1] == "get":
-    config = requests.get(url="https://duyssearch.search.windows.net/indexes/azureblob-index", headers=headers, params=params).content
+    r = requests.get(url="https://duyssearch.search.windows.net/indexes/azureblob-index", headers=headers, params=params)
+    config = r.content
+    print(r.status_code)
+    if len(config) < 5:
+        print("nothing to write")
+        sys.exit(0)
     outfile = open("config.json", "w")
     outfile.write(simplejson.dumps(simplejson.loads(config), indent=4, sort_keys=True))
 
 if sys.argv[1] == "post":
     with open('config.json', 'r') as outfile:
-        config = json.load(outfile)
-    requests.post(url="https://duyssearch.search.windows.net/indexes/azureblob-index", headers=headers, json=config, params=params)
+        config = json.load(outfile)["fields"]
+    r = requests.post(url="https://duyssearch.search.windows.net/indexes", headers=headers, json=config, params=params)
