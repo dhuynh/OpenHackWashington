@@ -1,7 +1,7 @@
 import requests
 import json
 
-url = "https://duyssearch.search.windows.net/indexes/azureblob-index/docs"
+baseurl = "https://duyssearch.search.windows.net/"
 
 class QueryBuilder(object):
     def __init__(self, query_type=None):
@@ -12,8 +12,7 @@ class QueryBuilder(object):
             }
         else:
             self.base = {
-                "api-version": "2019-05-06",
-                "queryType": query_type
+                "api-version": "2019-05-06"
             }
         self.headers = {
             'Content-Type': "application/json",
@@ -22,9 +21,10 @@ class QueryBuilder(object):
             'Postman-Token': "08038873-6b32-4f6b-bc7a-0a1d9a670a2e"
         }
 
-    def hitsearch(self, query, sortby):
+    def hitsearch(self, query, sortby, query_type):
         # Full search if checkmark is typed
-        self.base.update({"search": query, "$orderby": sortby})
+        url = baseurl + "indexes/azureblob-index/docs"
+        self.base.update({"queryType": query_type, "search": query, "$orderby": sortby})
         payload = ""
         response = requests.get(url=url, data=payload, headers=self.headers, params=self.base)
         if response.status_code != 200:
@@ -37,4 +37,16 @@ class QueryBuilder(object):
                               "modified": documents["metadata_storage_last_modified"],
                               "size": documents["metadata_storage_size"]})
         return filenames
+
+    def createskillset(self, skillsetname):
+        url = str(baseurl + "skillsets/" + skillsetname)
+        print(url, self.base)
+        payload = ""
+        response = requests.put(url=url, data=payload, headers=self.headers, params=self.base)
+        print(response)
+        if response.status_code != 200:
+            print("error parsing the response: %s" % str(response.content))
+            return {}
+        payload = json.loads(response.text)
+        return payload
 
