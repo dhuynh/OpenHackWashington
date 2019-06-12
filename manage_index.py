@@ -18,9 +18,9 @@ if sys.argv[1] == "delete":
     requests.delete(url="https://duyssearch.search.windows.net/indexes/azureblob-index", headers=headers, params=params)
 
 if sys.argv[1] == "get":
-    config = requests.get(url="https://duyssearch.search.windows.net/indexes/azureblob-index", headers=headers, params=params).json()
-    with open('config.json', 'w') as outfile:
-        outfile.write(simplejson.dumps(simplejson.load(config), indent=4))
+    config = requests.get(url="https://duyssearch.search.windows.net/indexes/azureblob-index", headers=headers, params=params).content
+    outfile = open("config.json", "w")
+    outfile.write(simplejson.dumps(simplejson.loads(config), indent=4, sort_keys=True))
 
 if sys.argv[1] == "post":
     with open('config.json', 'r') as outfile:
