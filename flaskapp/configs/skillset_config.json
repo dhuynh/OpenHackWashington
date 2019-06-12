@@ -6,18 +6,44 @@
     {
       "@odata.type": "#Microsoft.Skills.Text.EntityRecognitionSkill",
       "context": "/document",
-      "categories": [ "Organization" ],
+      "categories": [ "Organization", "Person", "Location", "URL"],
       "defaultLanguageCode": "en",
       "inputs": [
         {
           "name": "text",
-          "source": "/document/content"
+          "source": "/documents/content"
         }
       ],
       "outputs": [
         {
           "name": "organizations",
-          "targetName": "organizations"
+          "targetName": "organization"
+        },
+        {
+          "name": "persons",
+          "targetName": "person"
+        },
+        {
+          "name": "locations",
+          "targetName": "location"
+        },
+        {
+          "name": "urls",
+          "targetName": "url"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
+      "inputs": [
+        {
+          "name": "text", "source": "/document/content"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "languageCode",
+          "targetName": "languageCode"
         }
       ]
     },
@@ -41,7 +67,7 @@
     "inputs": [
       {
         "name": "text",
-        "source": "/document/text"
+        "source": "/document/content"
       },
       {
         "name": "languageCode",

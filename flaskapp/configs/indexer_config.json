@@ -1,0 +1,55 @@
+{
+    "name":"cognitiveindexer",	
+    "dataSourceName" : "documentsource",
+    "targetIndexName" : "azureblob-index",
+    "skillsetName" : "cognitiveskillset",
+    "fieldMappings" : [
+      {
+        "sourceFieldName" : "metadata_storage_content_md5",
+        "targetFieldName" : "id",
+        "mappingFunction" :
+          { "name" : "base64Encode" }
+      }
+    ],
+    "outputFieldMappings" :
+    [
+      {
+        "sourceFieldName" : "/documents/organization",
+        "targetFieldName" : "organizations"
+      },
+      {
+        "sourceFieldName" : "/documents/person",
+        "targetFieldName" : "persons"
+      },
+      {
+        "sourceFieldName" : "/documents/locations",
+        "targetFieldName" : "location"
+      },
+      {
+        "sourceFieldName" : "/documents/urls",
+        "targetFieldName" : "url"
+      },
+      {
+        "sourceFieldName" : "/documents/mySentiment",
+        "targetFieldName" : "sentiment"
+      },
+      {
+        "sourceFieldName" : "/documents/myKeyPhrases",
+        "targetFieldName" : "keyPhrases"
+      },
+      {
+        "sourceFieldName": "/documentscontent",
+        "targetFieldName": "languageCode"
+      }
+    ],
+    "parameters":
+    {
+      "maxFailedItems":-1,
+      "maxFailedItemsPerBatch":-1,
+      "configuration":
+      {
+        "dataToExtract": "contentAndMetadata",
+        "imageAction": "generateNormalizedImages"
+      }
+    }
+  }
