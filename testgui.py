@@ -63,6 +63,7 @@ if sys.argv[1] == "hitsearch":
                 sortby = "metadata_storage_name"
             elif values['_sortby_'] == "size":
                 sortby = "metadata_storage_size"
+
             qb = QueryBuilder(search_type)
             documentsreturned = qb.hitsearch(values['_query_'], sortby)
 
