@@ -3,6 +3,8 @@ import sys
 import json
 import simplejson
 
+
+
 headers = {
 
             'Content-Type': "application/json",
@@ -24,10 +26,10 @@ if sys.argv[1] == "get":
     if len(config) < 5:
         print("nothing to write")
         sys.exit(0)
-    outfile = open("config.json", "w")
+    outfile = open("index_config.json", "w")
     outfile.write(simplejson.dumps(simplejson.loads(config), indent=4, sort_keys=True))
 
 if sys.argv[1] == "post":
-    with open('config.json', 'r') as outfile:
+    with open('index_config.json', 'r') as outfile:
         config = json.load(outfile)["fields"]
     r = requests.post(url="https://duyssearch.search.windows.net/indexes", headers=headers, json=config, params=params)
