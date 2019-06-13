@@ -94,7 +94,39 @@
                     "targetName": "myKeyPhrases"
                 }
             ]
-        }
+        },
+        {
+          "description": "Extract image analysis.",
+          "@odata.type": "#Microsoft.Skills.Vision.ImageAnalysisSkill",
+          "context": "/document/normalized_images/*",
+          "defaultLanguageCode": "en",
+          "visualFeatures": [
+              "Tags",
+              "Categories",
+              "Description",
+              "Faces"
+          ],
+          "inputs": [
+              {
+                  "name": "image",
+                  "source": "/document/normalized_images/*"
+              }
+          ],
+          "outputs": [
+              {
+                  "name": "categories"
+              },
+              {
+                  "name": "tags"
+              },
+              {
+                  "name": "description"
+              },
+              {
+                  "name": "faces"
+              }
+          ]
+      }
     ],
     "cognitiveServices": {
         "@odata.type": "#Microsoft.Azure.Search.CognitiveServicesByKey",
