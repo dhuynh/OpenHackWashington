@@ -1,11 +1,188 @@
 {
-    "@odata.context": "https://duyssearch.search.windows.net/$metadata#indexes/$entity",
-    "@odata.etag": "\"0x8D6EF46AD1A928D\"",
     "analyzers": [],
     "charFilters": [],
     "corsOptions": null,
     "defaultScoringProfile": "",
     "fields": [
+        {
+            "name": "description",
+            "type": "Collection(Edm.ComplexType)",
+            "fields": [
+                {
+                    "name": "tags",
+                    "type": "Collection(Edm.String)",
+                    "searchable": true,
+                    "filterable": false,
+                    "facetable": false
+                },
+                {
+                    "name": "captions",
+                    "type": "Collection(Edm.ComplexType)",
+                    "fields": [
+                        {
+                            "name": "text",
+                            "type": "Edm.String",
+                            "searchable": true,
+                            "filterable": false,
+                            "facetable": false
+                        },
+                        {
+                            "name": "confidence",
+                            "type": "Edm.Double",
+                            "searchable": false,
+                            "filterable": false,
+                            "facetable": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "faces",
+            "type": "Collection(Edm.ComplexType)",
+            "fields": [
+                {
+                    "name": "age",
+                    "type": "Edm.Int32",
+                    "searchable": false,
+                    "filterable": false,
+                    "facetable": false
+                },
+                {
+                    "name": "gender",
+                    "type": "Edm.String",
+                    "searchable": false,
+                    "filterable": false,
+                    "facetable": false
+                },
+                {
+                    "name": "faceBoundingBox",
+                    "type": "Collection(Edm.ComplexType)",
+                    "fields": [
+                        {
+                            "name": "x",
+                            "type": "Edm.Int32",
+                            "searchable": false,
+                            "filterable": false,
+                            "facetable": false
+                        },
+                        {
+                            "name": "y",
+                            "type": "Edm.Int32",
+                            "searchable": false,
+                            "filterable": false,
+                            "facetable": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "tags",
+            "type": "Collection(Edm.ComplexType)",
+            "fields": [
+                {
+                    "name": "name",
+                    "type": "Edm.String",
+                    "searchable": true,
+                    "filterable": false,
+                    "facetable": false
+                },
+                {
+                    "name": "confidence",
+                    "type": "Edm.Double",
+                    "searchable": false,
+                    "filterable": false,
+                    "facetable": false
+                }
+            ]
+        },
+        {
+            "name": "categories",
+            "type": "Collection(Edm.ComplexType)",
+            "fields": [
+                {
+                    "name": "name",
+                    "type": "Edm.String",
+                    "searchable": true,
+                    "filterable": false,
+                    "facetable": false
+                },
+                {
+                    "name": "score",
+                    "type": "Edm.Double",
+                    "searchable": false,
+                    "filterable": false,
+                    "facetable": false
+                },
+                {
+                    "name": "detail",
+                    "type": "Edm.ComplexType",
+                    "fields": [
+                        {
+                            "name": "celebrities",
+                            "type": "Collection(Edm.ComplexType)",
+                            "fields": [
+                                {
+                                    "name": "name",
+                                    "type": "Edm.String",
+                                    "searchable": true,
+                                    "filterable": false,
+                                    "facetable": false
+                                },
+                                {
+                                    "name": "faceBoundingBox",
+                                    "type": "Collection(Edm.ComplexType)",
+                                    "fields": [
+                                        {
+                                            "name": "x",
+                                            "type": "Edm.Int32",
+                                            "searchable": false,
+                                            "filterable": false,
+                                            "facetable": false
+                                        },
+                                        {
+                                            "name": "y",
+                                            "type": "Edm.Int32",
+                                            "searchable": false,
+                                            "filterable": false,
+                                            "facetable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "confidence",
+                                    "type": "Edm.Double",
+                                    "searchable": false,
+                                    "filterable": false,
+                                    "facetable": false
+                                }
+                            ]
+                        },
+                        {
+                            "name": "landmarks",
+                            "type": "Collection(Edm.ComplexType)",
+                            "fields": [
+                                {
+                                    "name": "name",
+                                    "type": "Edm.String",
+                                    "searchable": true,
+                                    "filterable": false,
+                                    "facetable": false
+                                },
+                                {
+                                    "name": "confidence",
+                                    "type": "Edm.Double",
+                                    "searchable": false,
+                                    "filterable": false,
+                                    "facetable": false
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
         {
             "analyzer": "standard.lucene",
             "facetable": false,
@@ -32,7 +209,7 @@
             "searchable": true,
             "sortable": false,
             "synonymMaps": [],
-            "type": "Edm.String"
+            "type": "Collection(Edm.String)"
         },
         {
             "analyzer": "standard.lucene",
@@ -46,7 +223,7 @@
             "searchable": true,
             "sortable": false,
             "synonymMaps": [],
-            "type": "Edm.String"
+            "type": "Collection(Edm.String)"
         },
         {
             "analyzer": "standard.lucene",
@@ -60,7 +237,7 @@
             "searchable": true,
             "sortable": false,
             "synonymMaps": [],
-            "type": "Edm.String"
+            "type": "Collection(Edm.String)"
         },
         {
             "analyzer": "standard.lucene",
@@ -74,7 +251,7 @@
             "searchable": true,
             "sortable": false,
             "synonymMaps": [],
-            "type": "Edm.String"
+            "type": "Collection(Edm.String)"
         },
         {
             "analyzer": "standard.lucene",
@@ -102,7 +279,7 @@
             "searchable": true,
             "sortable": false,
             "synonymMaps": [],
-            "type": "Edm.String"
+            "type": "Collection(Edm.String)"
         },
         {
             "analyzer": "standard.lucene",
@@ -116,7 +293,7 @@
             "searchable": true,
             "sortable": false,
             "synonymMaps": [],
-            "type": "Edm.String"
+            "type": "Collection(Edm.String)"
         },
         {
             "analyzer": null,
