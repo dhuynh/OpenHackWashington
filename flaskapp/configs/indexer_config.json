@@ -14,16 +14,16 @@
     "outputFieldMappings" :
     [
       {
-        "sourceFieldName" : "/documents/organization",
+        "sourceFieldName" : "/documents/organizations",
         "targetFieldName" : "organizations"
       },
       {
-        "sourceFieldName" : "/documents/person",
+        "sourceFieldName" : "/documents/persons",
         "targetFieldName" : "persons"
       },
       {
         "sourceFieldName" : "/documents/locations",
-        "targetFieldName" : "location"
+        "targetFieldName" : "locations"
       },
       {
         "sourceFieldName" : "/documents/urls",
@@ -34,7 +34,7 @@
         "targetFieldName" : "sentiment"
       },
       {
-        "sourceFieldName" : "/documents/myKeyPhrases",
+        "sourceFieldName" : "/documents/page/*/myKeyPhrases/*",
         "targetFieldName" : "keyPhrases"
       },
       {
