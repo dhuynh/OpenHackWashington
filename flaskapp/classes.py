@@ -42,7 +42,13 @@ class QueryBuilder(object):
         for documents in payload:
             filenames.append({"name": documents['metadata_storage_name'],
                               "modified": documents["metadata_storage_last_modified"],
-                              "size": documents["metadata_storage_size"]})
+                              "size": documents["metadata_storage_size"],
+                              "sentiment": documents["sentiment"],
+                              "url": documents["url"],
+                              "organization": documents["organization"],
+                              "person": documents["person"],
+                              "location": documents["location"],
+                              "summary": documents["keyPhrases"]})
         return filenames
 
 class ConfigManager(object):
