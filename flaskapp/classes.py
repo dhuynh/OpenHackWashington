@@ -23,10 +23,15 @@ class QueryBuilder(object):
         self.base_params = params
         self.headers = headers
 
-    def hitsearch(self, query, sortby, query_type='simple'):
+    def hitsearch(self, query, sortby=None, query_type=None):
+        update =  {"search": query}
+        if query_type is not None:
+            update.update({"queryType": query_type})
+        if sortby is not None:
+            update.update({"$orderby": sortby})
         # Full search if checkmark is typed
         url = baseurl + "indexes/azureblob-index/docs"
-        self.base_params.update({"queryType": query_type, "search": query, "$orderby": sortby})
+        self.base_params.update(update)
         payload = ""
         response = requests.get(url=url, data=payload, headers=self.headers, params=self.base_params)
         if response.status_code != 200:
@@ -66,7 +71,7 @@ class ConfigManager(object):
     def post_index(self):
         with open(self.index_path) as outfile:
             config = json.load(outfile)
-        r = requests.post(url=baseurl + "indexes/azureblob-index", headers=headers, json=config, params=self.base_params)
+        r = requests.post(url=baseurl + "indexes", headers=headers, json=config, params=self.base_params)
         print(r.status_code)
 
     def create_skillset(self, skillsetname):

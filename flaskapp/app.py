@@ -31,10 +31,7 @@ def query():
         sortby = None
 
     qb = QueryBuilder()
-    if qtype is None:
-        hits = qb.hitsearch(search, sortby, qtype)
-    else:
-        hits = qb.hitsearch(search, sortby)
+    hits = qb.hitsearch(search, sortby, qtype)
 
 
     return render_template(template_name_or_list="index.html", hits=hits, num_hits=str(len(hits)))

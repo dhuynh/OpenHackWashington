@@ -1,6 +1,4 @@
 {
-    "@odata.context": "https://duyssearch.search.windows.net/$metadata#indexes/$entity",
-    "@odata.etag": "\"0x8D6EF46AD1A928D\"",
     "analyzers": [],
     "charFilters": [],
     "corsOptions": null,
@@ -32,7 +30,7 @@
             "searchable": true,
             "sortable": false,
             "synonymMaps": [],
-            "type": "Edm.String"
+            "type": "Collection(Edm.String)"
         },
         {
             "analyzer": "standard.lucene",
@@ -46,7 +44,7 @@
             "searchable": true,
             "sortable": false,
             "synonymMaps": [],
-            "type": "Edm.String"
+            "type": "Collection(Edm.String)"
         },
         {
             "analyzer": "standard.lucene",
@@ -60,7 +58,7 @@
             "searchable": true,
             "sortable": false,
             "synonymMaps": [],
-            "type": "Edm.String"
+            "type": "Collection(Edm.String)"
         },
         {
             "analyzer": "standard.lucene",
@@ -74,7 +72,7 @@
             "searchable": true,
             "sortable": false,
             "synonymMaps": [],
-            "type": "Edm.String"
+            "type": "Collection(Edm.String)"
         },
         {
             "analyzer": "standard.lucene",
@@ -102,7 +100,7 @@
             "searchable": true,
             "sortable": false,
             "synonymMaps": [],
-            "type": "Edm.String"
+            "type": "Collection(Edm.String)"
         },
         {
             "analyzer": "standard.lucene",
@@ -116,7 +114,7 @@
             "searchable": true,
             "sortable": false,
             "synonymMaps": [],
-            "type": "Edm.String"
+            "type": "Collection(Edm.String)"
         },
         {
             "analyzer": null,

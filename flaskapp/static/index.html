@@ -6,17 +6,10 @@
     <title>"Query Result"</title>
 </head>
 <body style="background-color:#4E4E4E;" text="white">
-<select name= colors method="GET" action="/">
-    {% for colour in colours %}
-    <option value= "{{colour}}" SELECTED>{{colour}}</option>"
-    {% endfor %}
-</select>
-<h2> number of hits...............{{num_hits}}</h2>
+
+<h2> number of hits: {{num_hits}}</h2>
     {% for dict_item in hits %}
-    <h5> {{dict_item}} <h5>
-<!--       {% for key, value in dict_item.items() %}-->
-<!--          <h1>{{key}} {{value}}</h1>-->
-<!--       {% endfor %}-->
+        <h5> {{dict_item}} </h5>
     {% endfor %}
 
 </body>

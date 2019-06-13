@@ -4,7 +4,6 @@ from flaskapp import classes
 import sys
 from pprint import pprint
 
-
 #GUI
 layout = [[sg.Text('Enter a Search Query', size = (30, 1)), sg.Text('Sort by (last_modified, size, filename, type):', size = (30, 1))],
           [sg.Input(do_not_clear=True, key='_query_', size = (40, 1)), sg.Input(do_not_clear=True, key='_sortby_', size = (30, 1))],
