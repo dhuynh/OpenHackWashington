@@ -14,31 +14,31 @@
     "outputFieldMappings" :
     [
       {
-        "sourceFieldName" : "/documents/organizations",
-        "targetFieldName" : "organizations"
+        "sourceFieldName" : "/document/organizations",
+        "targetFieldName" : "organization"
       },
       {
-        "sourceFieldName" : "/documents/persons",
-        "targetFieldName" : "persons"
+        "sourceFieldName" : "/document/persons",
+        "targetFieldName" : "person"
       },
       {
-        "sourceFieldName" : "/documents/locations",
-        "targetFieldName" : "locations"
+        "sourceFieldName" : "/document/locations",
+        "targetFieldName" : "location"
       },
       {
-        "sourceFieldName" : "/documents/urls",
+        "sourceFieldName" : "/document/urls",
         "targetFieldName" : "url"
       },
       {
-        "sourceFieldName" : "/documents/mySentiment",
+        "sourceFieldName" : "/document/mySentiment",
         "targetFieldName" : "sentiment"
       },
       {
-        "sourceFieldName" : "/documents/page/*/myKeyPhrases/*",
+        "sourceFieldName" : "/document/myKeyPhrases",
         "targetFieldName" : "keyPhrases"
       },
       {
-        "sourceFieldName": "/documentscontent",
+        "sourceFieldName": "/document/languageCode",
         "targetFieldName": "languageCode"
       }
     ],

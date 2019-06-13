@@ -1,6 +1,4 @@
 {
-    "@odata.context": "https://duyssearch.search.windows.net/$metadata#skillsets/$entity",
-    "@odata.etag": "\"0x8D6EF72F7EA4FB8\"",
     "name": "cognitiveskillset",
     "description": "Extract sentiment from financial records, extract company names, and then find additional information about each company mentioned.",
     "skills": [
@@ -33,7 +31,7 @@
             "inputs": [
                 {
                     "name": "text",
-                    "source": "/document/content",
+                    "source": "/document/text",
                     "sourceContext": null,
                     "inputs": []
                 }
@@ -85,7 +83,7 @@
                 },
                 {
                     "name": "languageCode",
-                    "source": "/document/languagecode",
+                    "source": "/document/languageCode",
                     "sourceContext": null,
                     "inputs": []
                 }
