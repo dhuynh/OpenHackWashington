@@ -3,7 +3,7 @@ import json
 import os
 import sys
 import simplejson
-
+import pandas as pd
 baseurl = "https://duyssearch.search.windows.net/"
 headers = {
 
@@ -17,7 +17,7 @@ params = {
             "api-version": "2019-05-06"
         }
 
-
+pd.set_option('display.max_colwidth', 300)
 class QueryBuilder(object):
     def __init__(self):
         self.base_params = params
@@ -29,6 +29,7 @@ class QueryBuilder(object):
             update.update({"queryType": query_type})
         if sortby is not None:
             update.update({"$orderby": sortby})
+
         # Full search if checkmark is typed
         url = baseurl + "indexes/azureblob-index/docs"
         self.base_params.update(update)
@@ -36,20 +37,42 @@ class QueryBuilder(object):
         response = requests.get(url=url, data=payload, headers=self.headers, params=self.base_params)
         if response.status_code != 200:
             print("error parsing the response: %s" % str(response.content))
-            return {}
+            return pd.DataFrame([])
         payload = json.loads(response.text)['value']
         filenames = []
         for documents in payload:
             filenames.append({"name": documents['metadata_storage_name'],
                               "modified": documents["metadata_storage_last_modified"],
-                              "size": documents["metadata_storage_size"],
+                              "image_tags": documents["tags"],
+                              "categories": documents["categories"],
                               "sentiment": documents["sentiment"],
                               "url": documents["url"],
                               "organization": documents["organization"],
                               "person": documents["person"],
                               "location": documents["location"],
                               "summary": documents["keyPhrases"]})
-        return filenames
+
+        df = pd.DataFrame(filenames)
+        df["sentiment"] = df["sentiment"].astype(float)
+        df["categories"] = df["categories"].astype(str)
+        df = df.round({"sentiment": 2})
+        # styles = [
+        #     dict(
+        #         props=[
+        #             ('border-collapse', 'separate'),
+        #             ('border-spacing', '10px 50px')
+        #         ]
+        #     ),
+        #     dict(
+        #         selector="thead",
+        #         props=[('display', 'none')]
+        #     )
+        # ]
+        #
+        # df.style.set_properties(subset=df.columns[[0, 2]], **{'text-align': 'right'}) \
+        #     .set_properties(subset=df.columns[[1, 3]], **{'text-align': 'left'}) \
+        #     .set_table_styles(styles)
+        return df
 
 class ConfigManager(object):
     def __init__(self, config_path):
